@@ -1,0 +1,33 @@
+//Brute Force
+class Solution {
+    private void subSet(int index, int[] nums,Set<List<Integer>> res, List<Integer> ds){
+        if(index ==  nums.length){
+            res.add(new ArrayList<>(ds));       
+            return;
+        }
+        
+        //pick
+        ds.add(nums[index]);
+        subSet(index+1,nums,res,ds);
+        ds.remove(ds.size()-1);
+        //not pick
+        
+        subSet(index+1, nums,res,ds);
+    }
+    
+    
+    
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Set<List<Integer>> res = new HashSet<>();
+        Arrays.sort(nums);
+        
+        subSet(0,nums,res, new ArrayList<>());
+        
+        List<List<Integer>> ans = new ArrayList<>();
+         for(List a:res)
+        {
+            ans.add(a);
+        }
+        return ans;        
+    }
+}
