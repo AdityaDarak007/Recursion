@@ -1,6 +1,7 @@
-// Extra Space Approach
 //Permutation 46 : 
-
+// Extra Space Approach
+//TC : n!*n;
+//SC : n! + n 
 class Solution {
     private void permutation(int[] nums,List<List<Integer>> res,List<Integer>ds, boolean[] seen){
         
@@ -24,6 +25,49 @@ class Solution {
         boolean[] seen= new boolean[nums.length];
         
         permutation(nums, res, new ArrayList<>(), seen);
+        
+        return res;
+        
+    }
+}
+// optimal approach 
+//TC : n! *n
+//SC : n!(storing permutations) + n(recusion call)
+
+class Solution {
+    private void permutation(int idx, int[] nums,List<List<Integer>> res){
+        
+        if(idx == nums.length){
+            List<Integer> ans = new ArrayList<>();
+            
+            for(int i=0;i<nums.length;i++){
+                ans.add(nums[i]);
+            }
+                
+            res.add(new ArrayList<>(ans));
+            return;
+        }
+        
+        for(int i=idx;i<nums.length;i++){
+            //swap
+            swap(i,idx,nums);
+            //recursive call
+            permutation(idx+1,nums,res);
+            //reswap to original place
+            swap(i,idx,nums);
+        }
+        
+    }
+    private void swap(int i, int j,int[] nums){
+        int temp= nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        
+        permutation(0,nums, res);
         
         return res;
         
